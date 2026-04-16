@@ -26,7 +26,6 @@
     --radius-md: 8px;
     --radius-lg: 12px;
   }
-  @media (prefers-color-scheme: dark) {
     :root {
       --bg: #1a1a1a;
       --bg-surface: #262626;
@@ -41,7 +40,6 @@
       --accent-warn-bg: #633806;
       --accent-success-bg: #085041;
     }
-  }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
@@ -71,9 +69,7 @@
   button.primary {
     background: var(--accent-info-bg); color: var(--accent-info); border-color: var(--accent-info);
   }
-  @media (prefers-color-scheme: dark) {
     button.primary { color: #B5D4F4; }
-  }
   select {
     font-family: inherit; font-size: 13px; padding: 6px 10px; height: 32px;
     background: var(--bg-surface); color: var(--text);
@@ -113,11 +109,9 @@
   .pill.virtual { background: var(--accent-warn-bg); color: var(--accent-warn); }
   .pill.none { background: var(--bg-bench); color: var(--text-tertiary); }
   .pill.success { background: var(--accent-success-bg); color: var(--accent-success); }
-  @media (prefers-color-scheme: dark) {
     .pill.real { color: #B5D4F4; }
     .pill.virtual { color: #FAC775; }
     .pill.success { color: #9FE1CB; }
-  }
   .metrics-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px;
   }
