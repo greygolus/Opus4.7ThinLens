@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thin Lens Simulator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <h1>Thin Lens Simulator</h1>
+  <p class="subtitle">Multi-element paraxial system. Lenses, apertures, immersion media. Automatic stop and pupil analysis.</p>
+
+  <div class="toolbar">
+    <button id="addPos">+ Converging lens</button>
+    <button id="addNeg">+ Diverging lens</button>
+    <button id="addAperture">+ Aperture</button>
+    <button id="reset">Reset</button>
+    <button id="savePreset">Save scene</button>
+    <button id="loadPreset">Load scene</button>
+    <div class="sep"></div>
+    <label class="toggle">Object:
+      <select id="objectMode">
+        <option value="finite">Finite</option>
+        <option value="infinity">At infinity</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="toolbar row2">
+    <label class="toggle"><input type="checkbox" id="showMarginal" checked> Marginal</label>
+    <label class="toggle"><input type="checkbox" id="showChief" checked> Chief</label>
+    <label class="toggle"><input type="checkbox" id="showParallel" checked> Parallel</label>
+    <label class="toggle"><input type="checkbox" id="showRimRays" checked> Rim rays (stop)</label>
+    <label class="toggle"><input type="checkbox" id="showVirtual" checked> Virtual extensions</label>
+    <label class="toggle"><input type="checkbox" id="showPupils" checked> Show pupils</label>
+    <label class="toggle"><input type="checkbox" id="showGrid" checked> Grid</label>
+    <label class="toggle"><input type="checkbox" id="showFocals" checked> Focal pts</label>
+    <div class="sep"></div>
+    <label class="toggle">Zoom
+      <input type="range" id="zoom" min="15" max="160" value="45" step="1" style="width: 110px;">
+      <span id="zoomOut" style="min-width: 24px; font-family: ui-monospace, monospace; font-size: 11px;">45</span>
+    </label>
+  </div>
+
+  <div id="bench"><svg id="svg"></svg></div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch" style="background: #378ADD"></span>Parallel ray</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #D85A30"></span>Chief ray</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #534AB7"></span>Marginal ray</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #0F6E56"></span>Rim rays</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #1D9E75"></span>Object</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #D85A30"></span>Real image</div>
+    <div class="legend-item"><span class="legend-swatch dashed" style="border-color: #D4537E"></span>Virtual image</div>
+    <div class="legend-item"><span class="legend-swatch" style="background: #BA7517"></span>Aperture stop</div>
+    <div class="legend-item"><span class="legend-swatch dashed" style="border-color: #534AB7"></span>Entrance pupil</div>
+    <div class="legend-item"><span class="legend-swatch dashed" style="border-color: #993C1D"></span>Exit pupil</div>
+  </div>
+
+  <div class="dashboard" id="dashboard">
+    <div class="dashboard-header">
+      <div class="dashboard-title">System output</div>
+      <div class="pills">
+        <div id="imageStatus" class="pill none">no image</div>
+        <div id="stopStatus" class="pill none">no stop</div>
+      </div>
+    </div>
+    <div class="metrics-grid" id="metrics"></div>
+    <div class="pupils-section" id="pupilsSection"></div>
+  </div>
+
+  <div class="columns">
+    <div>
+      <div class="column-title">Object and lenses</div>
+      <div id="lensPanel"></div>
+    </div>
+    <div>
+      <div class="column-title">Apertures and media</div>
+      <div id="aperturePanel"></div>
+      <div class="column-title" style="margin-top: 14px;">Media between elements</div>
+      <div id="mediaPanel"></div>
+    </div>
+  </div>
+
+  <p class="help">
+    <strong>Sign convention:</strong> Light travels left to right. Positive <span class="kbd">f</span> converging. Image distance v measured from lens; virtual image when v is on the object side.
+    <strong>Dragging:</strong> Object arrow slides horizontally, arrow tip changes height. Lenses slide along axis. Aperture drags along axis; drag its edge to resize.
+    <strong>Media:</strong> Each segment between elements can have an index n. Thin lens uses n₂/v − n₁/u = 1/f (paraxial power invariant).
+    <strong>Stop selection:</strong> For a finite object, the aperture whose object-space image subtends the smallest half-angle from the axial object point is the effective stop. For an object at infinity, the smallest object-space pupil diameter wins.
+  </p>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
